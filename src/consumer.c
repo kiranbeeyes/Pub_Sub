@@ -21,5 +21,5 @@ void *consumerMethod(void *input)
         printPacketData(data, threadId);
 	usleep(TIME_BETWEEN_PACKET_RETRIEVAL);
     }
-    return 0;
+    return (int *)SUCCESS;
 }

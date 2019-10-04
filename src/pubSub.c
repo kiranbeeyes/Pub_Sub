@@ -17,7 +17,7 @@ int main()
     globalQ = initializeQueue();
     startProducersConsumers();
     destroyQueue(globalQ);
-    return 0;
+    return SUCCESS;
 }
 
 /* Start up the Producers and Consumers */
@@ -30,16 +30,24 @@ void startProducersConsumers()
     for(int producerIndex = 0 ; producerIndex < NUM_PRODUCERS; producerIndex++)
     {	
 	producerIds[producerIndex] = producerIndex;
-        pthread_create(&producerThreads[producerIndex], NULL, producerMethod, 
+        int retVal = pthread_create(&producerThreads[producerIndex], NULL, producerMethod, 
 			(void *)&producerIds[producerIndex]);
+	if (retVal != SUCCESS)
+	{
+            printf("PubSub: Failure in creating Producer Thread\n");
+	}
     }
 
     int consumerIds[NUM_CONSUMERS];  // Needed to pass the Id to the threads
     for(int consumerIndex = 0 ; consumerIndex < NUM_PRODUCERS; consumerIndex++)
     {	    
 	consumerIds[consumerIndex] = consumerIndex;
-        pthread_create(&consumerThreads[consumerIndex], NULL, consumerMethod, 
+        int retVal = pthread_create(&consumerThreads[consumerIndex], NULL, consumerMethod, 
 			(void *)&consumerIds[consumerIndex]);
+	if (retVal != SUCCESS)
+	{
+            printf("PubSub: Failure in creating Consumer Thread\n");
+	}
     }
 
     // Wait for all the threads to complete before exiting the program

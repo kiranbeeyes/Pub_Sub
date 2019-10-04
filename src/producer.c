@@ -27,7 +27,7 @@ void *producerMethod(void *input)
         insertIntoQueue(globalQ, data);
 	usleep(TIME_BETWEEN_PACKET_PRODUCTION);
     }
-    return 0;
+    return (int *)SUCCESS;
 }
 
 /* Generate randomized packet data */

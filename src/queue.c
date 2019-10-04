@@ -4,6 +4,7 @@
  */
 
 #include "queue.h"
+#include "common.h"
 #include <pthread.h>
 
 pthread_mutex_t queue_update_mutex; // Mutex for synchronisation
@@ -38,7 +39,7 @@ int insertIntoQueue(QUEUE *q, PACKET_DATA data)
     if (isQueueFull(q))
     {
         printf("Queue: Queue is full, unable to insert data\n");
-	return 0;
+	return FAILURE;
     }
     pthread_mutex_lock(&queue_update_mutex);
     q->lastIndex = (q->lastIndex + 1) % MAX_QUEUE_LENGTH;
@@ -47,7 +48,7 @@ int insertIntoQueue(QUEUE *q, PACKET_DATA data)
     pthread_mutex_unlock(&queue_update_mutex);
 
     printf("Queue: Inserted data successfully into queue. Queue size is %d\n", q->currentQueueLen);
-    return 1;
+    return SUCCESS;
 }
 
 /* Method to retrieve Packet Data from the Queue */
