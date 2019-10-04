@@ -22,7 +22,7 @@ void test_Queue_Insertion_Removal()
     
     int result;
     result = insertIntoQueue(q, datax);
-    TEST_ASSERT_EQUAL_INT( 1, result);
+    TEST_ASSERT_EQUAL_INT(0, result);
 
     PACKET_DATA dataA = retrieveFromQueue(q);
     TEST_ASSERT_EQUAL_INT(DATA_TYPE_INT, dataA.dataType);

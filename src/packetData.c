@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include "packetData.h"
 
-/* Method to print packet data */
 void printPacketData(PACKET_DATA data, char *str)
 {
     if(data.dataType != DATA_TYPE_INVALID)

@@ -9,7 +9,18 @@
 
 pthread_mutex_t queue_update_mutex; // Mutex for synchronisation
 
-/* Method to initialize the Queue */
+/* CRIO Work Item1: The initializeQueue(), insertIntoQueue() and retrieveFromQueue() 
+ *                  methods can be cleared out for users to fill in.
+ *                  Specify that these methods should use the Queue structure and
+ *                  methods defined in queue.h
+ *                  Learning: Fundamental Queue operations 
+ * 
+ * CRIO Work Item2: The mutex related lines of code can be removed for users to implement.
+ *                  Without this synchronisation, we can see inconsistent queue length 
+ *                  for consecutive inserts/removals.
+ *                  Learning: Synchronisation
+ */
+
 QUEUE * initializeQueue()
 {
     printf("Queue: Initializing Queue\n");
@@ -25,7 +36,6 @@ QUEUE * initializeQueue()
     return q;
 }
 
-/* Method to destroy the Queue */
 void destroyQueue(QUEUE *q)
 {
     printf("Queue: Destroying Queue\n");
@@ -33,7 +43,6 @@ void destroyQueue(QUEUE *q)
     pthread_mutex_destroy(&queue_update_mutex); 
 }
 
-/* Method to insert Packet Data into the Queue */
 int insertIntoQueue(QUEUE *q, PACKET_DATA data)
 {
     if (isQueueFull(q))
@@ -52,7 +61,6 @@ int insertIntoQueue(QUEUE *q, PACKET_DATA data)
     return SUCCESS;
 }
 
-/* Method to retrieve Packet Data from the Queue */
 PACKET_DATA retrieveFromQueue(QUEUE *q)
 {
     if (isQueueEmpty(q))
@@ -73,19 +81,16 @@ PACKET_DATA retrieveFromQueue(QUEUE *q)
     return validData;
 }
 
-/* Method that provides the current Queue length */
 int getCurrentQueueLength(QUEUE *q)
 {
     return q->currentQueueLen;
 }
 
-/* Method to check for Queue being full */
 int isQueueFull(QUEUE *q)
 {
     return (getCurrentQueueLength(q) == MAX_QUEUE_LENGTH);
 }
 
-/* Method to check if Queue is empty */
 int isQueueEmpty(QUEUE *q)
 {
     return (getCurrentQueueLength(q) == 0);

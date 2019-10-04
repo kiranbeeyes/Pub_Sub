@@ -12,6 +12,15 @@
 
 #define MAX_DATA_STRING_LENGTH 10
 
+/* CRIO Work Item5: The PACKET_DATA structure can be cleared out into containing 
+ *                  one single int. Users should modify this to contain multi format data.
+ *                  Specify that the data could be int, float or a string.
+ *                  At the receving end, the type of data sent should be avaiable for correct
+ *                  interpretation. Involves modifying the printData() method in packetData.c
+ *                  and packet data generation in producer.c
+ *                  Learning: Multi format data
+ */
+
 typedef struct packetData {
     int dataType;
     union { 

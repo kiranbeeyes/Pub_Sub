@@ -7,7 +7,6 @@
 
 #include "pubSub.h"
 
-/* Main consumer method */
 void *consumerMethod(void *input)
 {
     int *id = (int *)input;

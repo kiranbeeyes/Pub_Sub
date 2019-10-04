@@ -7,7 +7,6 @@
 
 #include "pubSub.h"
 
-/* Main producer method */
 void *producerMethod(void *input)
 {
     int *id = (int *)input;
@@ -30,7 +29,6 @@ void *producerMethod(void *input)
     return (int *)SUCCESS;
 }
 
-/* Generate randomized packet data */
 void randomDataGenerator(PACKET_DATA *data)
 {
     int randDataType = DATA_TYPE_INVALID;
@@ -57,7 +55,6 @@ void randomDataGenerator(PACKET_DATA *data)
     }
 }
 
-/* Generate random String data */
 void generateRandomString(char *str, int length) 
 {
     static const char charsToUse[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

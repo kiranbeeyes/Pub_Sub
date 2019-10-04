@@ -10,6 +10,21 @@
 
 QUEUE *globalQ;
 
+/* CRIO Work Item3: The startProducersConsumers() method can be cleared out for users 
+ *                  to fill in. 
+ *                  Specify that this method should initialize NUM_PRODUCERS 
+ *                  and NUM_CONSUMERS threads and wait for them to complete.
+ *                  Learning: Multi-threading
+ * 
+ * CRIO Work Item4: The shared Global Queue can be removed.
+ *                  Specify that a global Queue needs to be created that can be shared
+ *                  across Producers and Consumers. They Queue needs to be initialized
+ *                  before creating the threads and destroyed after the threads complete.
+ *                  Make use of the Queue definition in queue.c
+ *                  Learning: Pub-Sub model based on Single Shared Queue resource.
+ */
+
+
 /* Everything starts here */
 int main() 
 {
@@ -20,7 +35,6 @@ int main()
     return SUCCESS;
 }
 
-/* Start up the Producers and Consumers */
 void startProducersConsumers()
 {
     pthread_t producerThreads[NUM_PRODUCERS];
