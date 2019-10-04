@@ -41,7 +41,8 @@ void startProducersConsumers()
     pthread_t consumerThreads[NUM_CONSUMERS];
     
     int producerIds[NUM_PRODUCERS];  // Needed to pass the Id to the threads
-    for(int producerIndex = 0 ; producerIndex < NUM_PRODUCERS; producerIndex++)
+    int producerIndex;
+    for(producerIndex = 0 ; producerIndex < NUM_PRODUCERS; producerIndex++)
     {	
 	producerIds[producerIndex] = producerIndex;
         int retVal = pthread_create(&producerThreads[producerIndex], NULL, producerMethod, 
@@ -53,7 +54,8 @@ void startProducersConsumers()
     }
 
     int consumerIds[NUM_CONSUMERS];  // Needed to pass the Id to the threads
-    for(int consumerIndex = 0 ; consumerIndex < NUM_PRODUCERS; consumerIndex++)
+    int consumerIndex;
+    for(consumerIndex = 0 ; consumerIndex < NUM_PRODUCERS; consumerIndex++)
     {	    
 	consumerIds[consumerIndex] = consumerIndex;
         int retVal = pthread_create(&consumerThreads[consumerIndex], NULL, consumerMethod, 
@@ -65,11 +67,12 @@ void startProducersConsumers()
     }
 
     // Wait for all the threads to complete before exiting the program
-    for (int iter = 0; iter < NUM_PRODUCERS; iter++)
+    int iter;
+    for (iter = 0; iter < NUM_PRODUCERS; iter++)
     {
         pthread_join(producerThreads[iter], NULL);
     }	
-    for (int iter = 0; iter < NUM_CONSUMERS; iter++)
+    for (iter = 0; iter < NUM_CONSUMERS; iter++)
     {
         pthread_join(consumerThreads[iter], NULL);
     }

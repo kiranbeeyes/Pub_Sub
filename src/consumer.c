@@ -14,7 +14,8 @@ void *consumerMethod(void *input)
     sprintf(threadId, "%s%d", "ConsumerThread", *id);
     printf("%s: Starting the consumerMethod\n", threadId);
         
-    for (int iter = 1; iter <= NUM_PACKETS_TO_RETRIEVE; iter++)
+    int iter;
+    for (iter = 1; iter <= NUM_PACKETS_TO_RETRIEVE; iter++)
     {
         PACKET_DATA data = retrieveFromQueue(globalQ);
         printPacketData(data, threadId);

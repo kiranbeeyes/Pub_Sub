@@ -18,7 +18,8 @@ void *producerMethod(void *input)
     time_t t;
     srand((unsigned int)time(&t));   // TODO - currently all threads are generating same data. Address this.
 
-    for (int iter = 1; iter <= NUM_PACKETS_TO_PRODUCE; iter++)
+    int iter;
+    for (iter = 1; iter <= NUM_PACKETS_TO_PRODUCE; iter++)
     {
         PACKET_DATA data;
         randomDataGenerator(&data);
@@ -59,7 +60,8 @@ void generateRandomString(char *str, int length)
 {
     static const char charsToUse[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    for (int i = 0; i < length; ++i) {
+    int i;
+    for (i = 0; i < length; ++i) {
         str[i] = charsToUse[rand() % (sizeof(charsToUse) - 1)];
     }
 
