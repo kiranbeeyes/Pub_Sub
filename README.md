@@ -6,3 +6,8 @@ Consumers retrieve data from the queue.
 Access to the queue is synchronized.
 
 Implementation is in C.
+
+Compilation: Go into the src directory and execute
+    gcc pubSub.c consumer.c producer.c packetData.c queue.c -o pubSub
+    NOTE: On linux, we may need to include -lpthread for successful compilation
+Execution: ./pubSub
