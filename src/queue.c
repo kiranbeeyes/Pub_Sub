@@ -18,6 +18,8 @@ pthread_mutex_t queue_update_mutex; // Mutex for synchronisation
  * CRIO Work Item2: The mutex related lines of code can be removed for users to implement.
  *                  Without this synchronisation, we can see inconsistent queue length 
  *                  for consecutive inserts/removals.
+ *                  Specify that reads and writes on the Queue should be synchornized
+ *                  for consistency in a multi-threaded environment
  *                  Learning: Synchronisation
  */
 
