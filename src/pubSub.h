@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <time.h>
 #include "queue.h"
+#include "common.h"
 
 #define NUM_PRODUCERS 5
 #define NUM_CONSUMERS 5
@@ -16,9 +17,6 @@
 #define NUM_PACKETS_TO_RETRIEVE 50
 #define TIME_BETWEEN_PACKET_RETRIEVAL 50000  // In microseconds
 #define MAX_THREAD_NAME_LEN 25
-
-#define SUCCESS 1
-#define FAILURE 0
 
 extern QUEUE *globalQ;   // Global Queue to be shared between Producers and Consumers
 
