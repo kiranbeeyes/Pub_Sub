@@ -45,15 +45,15 @@ void destroyQueue(QUEUE *q)
     pthread_mutex_destroy(&queue_update_mutex); 
 }
 
-int insertIntoQueue(QUEUE *q, PACKET_DATA data)
+int insertIntoQueue(QUEUE *q, unsigned char *data)
 {
+    pthread_mutex_lock(&queue_update_mutex);
     if (isQueueFull(q))
     {
         printf("Queue: Queue is full, unable to insert data\n");
+        pthread_mutex_unlock(&queue_update_mutex);
 	return FAILURE;
     }
-    
-    pthread_mutex_lock(&queue_update_mutex);
     q->lastIndex = (q->lastIndex + 1) % MAX_QUEUE_LENGTH;
     q->currentQueueLen += 1;
     q->queueData[q->lastIndex] = data;
@@ -63,24 +63,23 @@ int insertIntoQueue(QUEUE *q, PACKET_DATA data)
     return SUCCESS;
 }
 
-PACKET_DATA retrieveFromQueue(QUEUE *q)
+unsigned char * retrieveFromQueue(QUEUE *q)
 {
+    pthread_mutex_lock(&queue_update_mutex);
     if (isQueueEmpty(q))
     {
         printf("Queue: Queue is empty, unable to retrieve data\n");
-	PACKET_DATA invalidData;
-	invalidData.dataType = DATA_TYPE_INVALID;
-	return invalidData;
+        pthread_mutex_unlock(&queue_update_mutex);
+	return NULL;
     }
     
-    pthread_mutex_lock(&queue_update_mutex);
-    PACKET_DATA validData = q->queueData[q->firstIndex];
+    unsigned char * data = q->queueData[q->firstIndex];
     q->firstIndex = (q->firstIndex + 1) % MAX_QUEUE_LENGTH;
     q->currentQueueLen -= 1;
     printf("Queue: Retrieved data successfully from queue. Queue size is %d\n", q->currentQueueLen);
     pthread_mutex_unlock(&queue_update_mutex);
 
-    return validData;
+    return data;
 }
 
 int getCurrentQueueLength(QUEUE *q)

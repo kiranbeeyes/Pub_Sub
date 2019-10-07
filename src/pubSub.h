@@ -23,5 +23,4 @@ extern QUEUE *globalQ;   // Global Queue to be shared between Producers and Cons
 void startProducersConsumers();
 void *producerMethod(void *input);
 void *consumerMethod(void *input);
-void randomDataGenerator(PACKET_DATA *data);
-void generateRandomString(char *str, int length); 
+void randomDataGenerator(unsigned char *data, int length, char *id);

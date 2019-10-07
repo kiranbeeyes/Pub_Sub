@@ -21,49 +21,36 @@ void *producerMethod(void *input)
     int iter;
     for (iter = 1; iter <= NUM_PACKETS_TO_PRODUCE; iter++)
     {
-        PACKET_DATA data;
-        randomDataGenerator(&data);
-        printPacketData(data, threadId);
+        unsigned char *data;
+	int sizeOfStr = 20; // TODO - remove hardcoded 20 here, can generate any length
+        // sizeOfStr includes the NUL character
+	
+        // Allocate memory for byte array
+        data = (unsigned char *) malloc (sizeOfStr * sizeof(unsigned char));
+        randomDataGenerator(data, sizeOfStr, threadId);
+
         insertIntoQueue(globalQ, data);
 	usleep(TIME_BETWEEN_PACKET_PRODUCTION);
     }
     return (int *)SUCCESS;
 }
 
-void randomDataGenerator(PACKET_DATA *data)
-{
-    int randDataType = DATA_TYPE_INVALID;
-
-    // Generate one of the DATA_TYPEs at random
-    while (randDataType == DATA_TYPE_INVALID)
-    {
-	randDataType = rand() % (DATA_TYPE_STRING + 1); // This is the current max value for DATA_TYPE
-    }
-    if (randDataType == DATA_TYPE_INT)
-    {	    
-        data->dataType = DATA_TYPE_INT;
-        data->data.intData = rand();
-    }
-    else if (randDataType == DATA_TYPE_FLOAT)
-    {
-        data->dataType = DATA_TYPE_FLOAT;
-        data->data.floatData = ((float)rand()/(float)(RAND_MAX)) * 10000; // Number less than 10000
-    }
-    else // DATA_TYPE_STRING
-    {
-        data->dataType = DATA_TYPE_STRING;
-        generateRandomString(data->data.strData, MAX_DATA_STRING_LENGTH);
-    }
-}
-
-void generateRandomString(char *str, int length) 
+void randomDataGenerator(unsigned char *data, int sizeOfStr, char *threadId)
 {
     static const char charsToUse[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
+    
+    char dataString[sizeOfStr];
     int i;
-    for (i = 0; i < length; ++i) {
-        str[i] = charsToUse[rand() % (sizeof(charsToUse) - 1)];
+    for (i = 0; i < sizeOfStr-1; ++i) { 
+        dataString[i] = charsToUse[rand() % (sizeof(charsToUse) - 1)];
     }
+    dataString[sizeOfStr-1] = '\0';
+    printf("%s: String Data is %s\n", threadId, dataString);
 
-    str[length] = 0;
+    // Convert the string to byte array
+    int strIndex = 0;
+    for (strIndex = 0; strIndex < sizeOfStr; strIndex++)
+    {
+        data[strIndex] = dataString[strIndex];
+    }
 }

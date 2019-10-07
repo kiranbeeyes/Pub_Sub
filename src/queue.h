@@ -5,20 +5,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "packetData.h"
 
-#define MAX_QUEUE_LENGTH 50   //TODO - remove this and make size one of the inputs to initializeQueue()
+#define MAX_QUEUE_LENGTH 5000   //TODO - remove this and make size one of the inputs to initializeQueue()
 
 typedef struct Queue 
 {
     int firstIndex, lastIndex, currentQueueLen;
-    PACKET_DATA queueData[MAX_QUEUE_LENGTH];
+    unsigned char *queueData[MAX_QUEUE_LENGTH];  // Byte array as generic data format
+    // Ideally have an XML or JSON string converted to byte array and send it
+    // Consumer knows how to interpret the data
+    // Memory for the data will be allocated by producer and freed up by consumer
 }QUEUE;
 
 QUEUE * initializeQueue();
 void destroyQueue(QUEUE *q);
-int insertIntoQueue(QUEUE *q, PACKET_DATA data);
-struct packetData retrieveFromQueue(QUEUE *q);
+int insertIntoQueue(QUEUE *q, unsigned char *data);
+unsigned char * retrieveFromQueue(QUEUE *q);
 int getCurrentQueueLength(QUEUE *q);
 int isQueueFull(QUEUE *q);
 int isQueueEmpty(QUEUE *q);

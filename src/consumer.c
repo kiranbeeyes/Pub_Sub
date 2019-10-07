@@ -7,6 +7,27 @@
 
 #include "pubSub.h"
 
+void printPacketData(unsigned char *data, char *threadId)
+{
+    // TODO - optimize this function
+    // Convert byte array to string and print
+    int byteArrayIndex = 0;
+    while(data[byteArrayIndex] != 0)  // 0 is the last character indicating '\0'
+    {
+	byteArrayIndex++;
+    }
+
+    char str[byteArrayIndex];  // including for '\0' character
+    byteArrayIndex = 0;
+    while(data[byteArrayIndex] != 0)
+    {
+        str[byteArrayIndex] = data[byteArrayIndex];
+	byteArrayIndex++;
+    }
+    str[byteArrayIndex] = '\0';
+    printf("%s: String Data is %s\n", threadId, str);
+}
+
 void *consumerMethod(void *input)
 {
     int *id = (int *)input;
@@ -17,8 +38,13 @@ void *consumerMethod(void *input)
     int iter;
     for (iter = 1; iter <= NUM_PACKETS_TO_RETRIEVE; iter++)
     {
-        PACKET_DATA data = retrieveFromQueue(globalQ);
-        printPacketData(data, threadId);
+        unsigned char *data = retrieveFromQueue(globalQ);
+	if (data != NULL)
+	{
+	    printPacketData(data, threadId);
+            // Free up the memory allocated for the data
+	    free (data);
+	}
 	usleep(TIME_BETWEEN_PACKET_RETRIEVAL);
     }
     return (int *)SUCCESS;

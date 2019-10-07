@@ -9,7 +9,7 @@ Implementation is in C. Unit testing framework is Unity
 
 Compilation: Go into the src directory and execute
 
-gcc pubSub.c consumer.c producer.c packetData.c queue.c -lpthread -o pubSub
+gcc pubSub.c consumer.c producer.c queue.c -lpthread -o pubSub
 
 Execution: ./pubSub
 
